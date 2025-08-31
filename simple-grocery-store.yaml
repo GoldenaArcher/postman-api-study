@@ -1,0 +1,19 @@
+openapi: 3.1.0
+
+info:
+  title: Simple Grocery Store API
+  version: 1.0.0
+  description: API for managing a simple grocery store.
+
+tags:
+  - name: status
+    description: Status related endpoints
+
+paths:
+  /status:
+    $ref: "./status-api.yaml#/paths/~1status"
+
+components:
+  schemas:
+    StatusResponse:
+      $ref: "./status-api.yaml#/components/schemas/StatusResponse"

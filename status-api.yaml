@@ -1,0 +1,37 @@
+openapi: 3.1.0
+
+info:
+  title: Status API
+  version: 1.0.0
+  description: API for checking the status of the service.
+
+tags:
+  - name: status
+    description: Status related endpoints
+
+paths:
+  /status:
+    get:
+      tags: [status]
+      summary: |
+        Get the current status of the service
+      description: |
+        Status `UP` indicates that the API is running as expected.
+        
+        No response or any other response indicates that the API is not functioning correctly.
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusResponse"
+
+components:
+  schemas:
+    StatusResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "ok"

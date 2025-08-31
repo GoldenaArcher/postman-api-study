@@ -10,6 +10,20 @@ tags:
     description: Status related endpoints
 
 paths:
+  /:
+    get:
+      summary: Welcome message
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Welcome to the Simple Grocery Store API!"
   /status:
     $ref: "./status-api.yaml#/paths/~1status"
 

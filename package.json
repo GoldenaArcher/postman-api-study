@@ -1,0 +1,16 @@
+{
+  "name": "postman",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "mock": "nodemon --watch './api/**/*.yaml' --exec \"prism mock ./api/simple-grocery-store.yaml -p 8080\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@stoplight/prism-cli": "^5.14.2",
+    "nodemon": "^3.1.10"
+  }
+}

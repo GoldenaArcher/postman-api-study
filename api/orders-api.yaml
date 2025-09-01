@@ -1,0 +1,58 @@
+openapi: 3.1.0
+
+info:
+  title: Orders API
+  version: 1.0.0
+  description: API for managing orders in the store.
+
+tags:
+  - name: orders
+    description: Order related endpoints
+
+paths:
+  /orders:
+    post:
+      tags: [orders]
+      summary: The request body needs to be in JSON format. Once the order has been successfully submitted, the cart is deleted.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customerName:
+                  $ref: "#/components/schemas/CustomerName"
+                cartId:
+                  $ref: "./carts-api.yaml#/components/schemas/CartId"
+                comment:
+                  $ref: "#/components/schemas/Comment"
+              required:
+                - customerName
+                - cartId
+            examples:
+              orderRequest:
+                $ref: "#/components/examples/OrderRequest"
+
+components:
+  securitySchemes:
+    $ref: "./common/security.yaml#/components/securitySchemes"
+
+  examples:
+    OrderRequest:
+      summary: Example of an order request
+      value:
+        customerName: "Jane Doe"
+        cartId: "ZFe4yhG5qNhmuNyrbLWa4"
+
+  schemas:
+    CustomerName:
+      type: string
+      description: The customer's full name.
+      example: "Jane Doe"
+    Comment:
+      type: string
+      description: Optional comment from the customer.
+      example: "Please deliver between 5-6 PM."

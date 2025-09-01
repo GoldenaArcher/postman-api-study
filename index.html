@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.27.1/swagger-ui.css"
+    />
+    <title>Simple Grocery Store API Documentation</title>
+  </head>
+  <body>
+    <div id="simple-grocery-store-oas"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.27.1/swagger-ui-bundle.js"></script>
+    <script>
+      const ui = SwaggerUIBundle({
+        url: "./api/simple-grocery-store.yaml",
+        dom_id: "#simple-grocery-store-oas",
+        deepLinking: true,
+      });
+    </script>
+  </body>
+</html>

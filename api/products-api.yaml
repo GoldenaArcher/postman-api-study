@@ -1,0 +1,174 @@
+openapi: 3.1.0
+
+info:
+  title: Products API
+  version: 1.0.0
+  description: API for managing products in the store.
+
+tags:
+  - name: products
+    description: Product related endpoints
+
+paths:
+  /products:
+    get:
+      tags: [products]
+      summary: Returns a list of products from the inventory.
+      parameters:
+        - $ref: "#/components/parameters/categoryQueryParam"
+        - $ref: "#/components/parameters/resultsParam"
+        - $ref: "#/components/parameters/availableParam"
+      responses:
+        "200":
+          description: Indicates a successful response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+              examples:
+                productListMany:
+                  $ref: "#/components/examples/ProductListMany"
+                productListSingle:
+                  $ref: "#/components/examples/ProductListSingle"
+        "400":
+          description: Indicates that the parameters provided are invalid.
+
+  /products/{productId}:
+    get:
+      tags: [products]
+      summary: Returns a single product from the inventory.
+      parameters:
+        - $ref: "#/components/parameters/productIdPathParam"
+        - $ref: "#/components/parameters/productLabelParam"
+      responses:
+        "200":
+          description: Indicates a successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+              examples:
+                productCoffee:
+                  $ref: "#/components/examples/ProductCoffee"
+                productBakery:
+                  $ref: "#/components/examples/ProductBakery"
+        "404":
+          description: Indicates that there is no product with the specified id.
+
+components:
+  x-snippets:
+    productCoffee: &productCoffee
+      id: 4643
+      category: coffee
+      name: "Starbucks Coffee Variety Pack, 100% Arabica"
+      inStock: true
+    productBakery: &productBakery
+      id: 1234
+      category: bread-bakery
+      name: "Freshly Baked Croissant"
+      inStock: true
+
+  examples:
+    CategoryMeat:
+      summary: Meat & Seafood category
+      value: meat-seafood
+    CategoryBakery:
+      summary: Bread & Bakery category
+      value: bread-bakery
+    CategoryCoffee:
+      summary: Coffee category
+      value: coffee
+    ProductCoffee:
+      summary: Example of a coffee product
+      value: *productCoffee
+    ProductBakery:
+      summary: Example of a bakery product
+      value: *productBakery
+    ProductListMany:
+      summary: Example of a product list with multiple products
+      value:
+        - *productCoffee
+        - *productBakery
+    ProductListSingle:
+      summary: Example of a product list with a single product
+      value:
+        - *productCoffee
+
+  parameters:
+    categoryQueryParam:
+      name: category
+      in: query
+      description: |
+        Specifies the category of products you want to be returned.
+
+        It can be one of: `meat-seafood`, `fresh-produce`, `candy`, `bread-bakery`, `dairy`, `eggs`, `coffee`.
+      required: false
+      schema:
+        $ref: "#/components/schemas/CategoryEnum"
+      examples:
+        meat-seafood:
+          $ref: "#/components/examples/CategoryMeat"
+        bakery:
+          $ref: "#/components/examples/CategoryBakery"
+        coffee:
+          $ref: "#/components/examples/CategoryCoffee"
+    resultsParam:
+      name: results
+      in: query
+      description: |
+        Specifies the number of results you want.
+
+        Must be number between `1` and `20`. By default, only `20` products will be displayed.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 20
+      example: 10
+    availableParam:
+      name: available
+      in: query
+      description: Specifies the availability of the products. By default, all products will be displayed.
+      required: false
+      schema:
+        type: boolean
+      example: true
+    productIdPathParam:
+      name: productId
+      in: path
+      description: Specifies the product's id you wish to retrieve.
+      required: true
+      schema:
+        type: number
+      example: 4643
+    productLabelParam:
+      name: product-label
+      in: query
+      description: Returns the product label in PDF format.
+      required: false
+      schema:
+        type: boolean
+      example: true
+
+  schemas:
+    CategoryEnum:
+      type: string
+      description: |
+        Product category. One of:
+        `meat-seafood`, `fresh-produce`, `candy`, `bread-bakery`, `dairy`, `eggs`, `coffee`.
+      enum:
+        [meat-seafood, fresh-produce, candy, bread-bakery, dairy, eggs, coffee]
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: number
+        category:
+          $ref: "#/components/schemas/CategoryEnum"
+        name:
+          type: string
+        inStock:
+          type: boolean

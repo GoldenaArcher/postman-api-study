@@ -35,6 +35,13 @@ paths:
             examples:
               orderRequest:
                 $ref: "#/components/examples/OrderRequest"
+      responses:
+        "201":
+          description: Indicates that the order has been created successfully.
+        "400":
+          description: Indicates that the parameters provided are invalid.
+        "401":
+          description: Indicates that the request has not been authenticated. Check the response body for additional details.
 
 components:
   securitySchemes:

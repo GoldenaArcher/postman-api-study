@@ -9,11 +9,41 @@ tags:
   - name: carts
     description: Cart related endpoints
 
-paths: {}
+paths:
+  /carts:
+    post:
+      tags: [carts]
+      description: |
+        To create a new cart, submit an empty POST request to the `/carts` endpoint.
+      responses:
+        "201":
+          description: Indicates that the cart has been created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartCreatedResponse"
+              examples:
+                CartCreated:
+                  $ref: "#/components/examples/CartCreated"
 
 components:
+  examples:
+    CartCreated:
+      summary: Example of a cart creation response
+      value:
+        cartId: "bx0-ycNjqIm5IvufuuZ09"
+        created: true
+
   schemas:
     CartId:
       type: string
       description: The unique identifier for a cart.
       example: "ZFe4yhG5qNhmuNyrbLWa4"
+    CartCreatedResponse:
+      type: object
+      properties:
+        cartId:
+          $ref: "#/components/schemas/CartId"
+        created:
+          type: boolean
+          description: Indicates whether the cart was created successfully.

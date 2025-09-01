@@ -28,3 +28,5 @@ paths:
     $ref: "./products-api.yaml#/paths/~1products~1{productId}"
   /orders:
     $ref: "./orders-api.yaml#/paths/~1orders"
+  /carts:
+    $ref: "./carts-api.yaml#/paths/~1carts"

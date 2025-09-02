@@ -180,3 +180,8 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/Product"
+
+    ProductId:
+      type: integer
+      description: The unique identifier for a product.
+      example: 4643

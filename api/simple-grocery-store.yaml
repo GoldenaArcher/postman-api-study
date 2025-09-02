@@ -32,3 +32,5 @@ paths:
     $ref: "./carts-api.yaml#/paths/~1carts"
   /carts/{cartId}:
     $ref: "./carts-api.yaml#/paths/~1carts~1{cartId}"
+  /carts/{cartId}/items:
+    $ref: "./carts-api.yaml#/paths/~1carts~1{cartId}~1items"

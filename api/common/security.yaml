@@ -4,3 +4,12 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+
+  AuthorizationHeader:
+    name: Authorization
+    in: header
+    required: true
+    description: Bearer token, e.g. `Bearer eyJ...`
+    schema:
+      type: string
+      pattern: '^Bearer\s+.+$'

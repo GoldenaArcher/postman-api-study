@@ -16,6 +16,8 @@ paths:
       summary: The request body needs to be in JSON format. Once the order has been successfully submitted, the cart is deleted.
       security:
         - BearerAuth: []
+      parameters:
+        - $ref: "./common/security.yaml#/components/AuthorizationHeader"
       requestBody:
         required: true
         content:

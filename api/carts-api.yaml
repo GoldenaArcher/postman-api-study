@@ -49,7 +49,7 @@ paths:
         "404":
           description: Indicates that there is no cart with the specified id.
 
-  /carts/{cartid}/items:
+  /carts/{cartId}/items:
     get:
       tags: [carts]
       summary: Returns the items in a cart.
@@ -67,10 +67,37 @@ paths:
                   $ref: "./products-api.yaml#/components/examples/ProductListEmpty"
         "404":
           description: Indicates that there is no cart with the specified id.
+    post:
+      tags: [carts]
+      summary: Allows the addition of items to an existing cart. Only one item can be added at a time.
+      parameters:
+        - $ref: "#/components/parameters/cartIdPathParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CartItem"
+            examples:
+              AddCartItemRequest:
+                $ref: "#/components/examples/AddCartItemRequestExample"
+      responses:
+        "201":
+          description: Indicates that the item has been added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AddCartItemResponse"
+              examples:
+                AddCartItemResponseExample:
+                  $ref: "#/components/examples/AddCartItemResponseExample"
+        "400":
+          description: Indicates that the parameters provided are invalid.
 
 components:
   x-snippet:
     cartIdExample: &cartIdExample ZFe4yhG5qNhmuNyrbLWa4
+    itemIdExample: &itemIdExample 12345
 
   parameters:
     cartIdPathParam:
@@ -93,6 +120,15 @@ components:
       value:
         created: "2025-09-07T14:48:00.000Z"
         items: []
+    AddCartItemRequestExample:
+      summary: Example of a request to add an item to a cart
+      value:
+        productId: 4643
+    AddCartItemResponseExample:
+      summary: Example of a response after adding an item to a cart
+      value:
+        created: true
+        itemId: *itemIdExample
 
   schemas:
     CartId:
@@ -117,6 +153,35 @@ components:
           example: "2025-09-07T14:48:00.000Z"
         items:
           $ref: "./products-api.yaml#/components/schemas/ProductArray"
+
+    AddCartItemResponse:
+      type: object
+      properties:
+        created:
+          type: boolean
+        itemId:
+          $ref: "#/components/schemas/CartItemId"
+
+    CartItem:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/CartItemId"
+        productId:
+          $ref: "./products-api.yaml#/components/schemas/ProductId"
+        quantity:
+          type: integer
+          description: |
+            The quantity of the product in the cart.
+
+            If no quantity is provided, the default value is 1.
+          example: 2
+      required:
+        - productId
+    CartItemId:
+      type: number
+      description: The unique identifier for a cart item.
+      example: *itemIdExample
 
   links:
     GetCartById:

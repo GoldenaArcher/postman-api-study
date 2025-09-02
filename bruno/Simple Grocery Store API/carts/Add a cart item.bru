@@ -1,0 +1,21 @@
+meta {
+  name: Add a cart item
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/carts/:cartId/items
+  body: json
+  auth: inherit
+}
+
+params:path {
+  cartId: ZFe4yhG5qNhmuNyrbLWa4
+}
+
+body:json {
+  {
+     "productId": 4643
+  }
+}

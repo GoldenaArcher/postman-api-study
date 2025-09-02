@@ -23,17 +23,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                customerName:
-                  $ref: "#/components/schemas/CustomerName"
-                cartId:
-                  $ref: "./carts-api.yaml#/components/schemas/CartId"
-                comment:
-                  $ref: "#/components/schemas/Comment"
-              required:
-                - customerName
-                - cartId
+              $ref: "#/components/schemas/OrderCreateRequest"
             examples:
               orderRequest:
                 $ref: "#/components/examples/OrderRequest"
@@ -72,6 +62,36 @@ paths:
                   $ref: "#/components/examples/GetOrderResponseExampleMultiItems"
         "401":
           description: Indicates that the request has not been authenticated. Check the response body for additional details.
+  /orders/{orderId}:
+    patch:
+      tags: [orders]
+      summary: Update an existing order. You can update the customer name, cart ID, and/or comment.
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: "./common/security.yaml#/components/AuthorizationHeader"
+        - $ref: "#/components/parameters/orderIdPathParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderUpdateRequest"
+            examples:
+              orderUpdateRequest:
+                summary: Example of an order update request
+                value:
+                  customerName: "John Smith"
+                  comment: "Leave at the front door."
+      responses:
+        "204":
+          description: Indicates that the order has been updated successfully.
+        "400":
+          description: Indicates that the parameters provided are invalid.
+        "401":
+          description: Indicates that the request has not been authenticated. Check the response body for additional details.
+        "404":
+          description: Indicates that there is no order with the specified id.
 
 components:
   securitySchemes:
@@ -118,6 +138,16 @@ components:
         created: "2023-10-02T10:15:00Z"
         comment: "Leave at the front door."
 
+  parameters:
+    orderIdPathParam:
+      name: orderId
+      in: path
+      required: true
+      description: The unique identifier for the order.
+      schema:
+        $ref: "#/components/schemas/OrderId"
+      example: "ord_123456789"
+
   schemas:
     OrderId:
       type: string
@@ -131,6 +161,23 @@ components:
       type: string
       description: Optional comment from the customer.
       example: "Please deliver between 5-6 PM."
+    OrderFields:
+      type: object
+      properties:
+        customerName:
+          $ref: "#/components/schemas/CustomerName"
+        cartId:
+          $ref: "./carts-api.yaml#/components/schemas/CartId"
+        comment:
+          $ref: "#/components/schemas/Comment"
+      unevaluatedProperties: false
+    OrderCreateRequest:
+      allOf:
+        - $ref: "#/components/schemas/OrderFields"
+        - type: object
+          required:
+            - customerName
+            - cartId
     OrderCreatedResponse:
       type: object
       properties:
@@ -147,3 +194,9 @@ components:
           format: date-time
         comment:
           $ref: "#/components/schemas/Comment"
+    OrderUpdateRequest:
+      allOf:
+        - $ref: "#/components/schemas/OrderFields"
+        - type: object
+          minProperties: 1
+          description: At least one field must be provided for update.

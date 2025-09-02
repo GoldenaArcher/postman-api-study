@@ -1,0 +1,70 @@
+openapi: 3.1.0
+
+info:
+  title: Auth API
+  version: 1.0.0
+  description: API for managing authentication in the store.
+
+tags:
+  - name: auth
+    description: Authentication related endpoints
+
+paths:
+  /api-clients:
+    post:
+      tags: [auth]
+      summary: Register a new API client
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                clientName:
+                  $ref: "#/components/schemas/ClientName"
+                clientEmail:
+                  $ref: "#/components/schemas/ClientEmail"
+              required:
+                - clientName
+                - clientEmail
+            examples:
+              apiClientRequest:
+                $ref: "#/components/examples/ApiClientRequest"
+      responses:
+        "201":
+          description: Indicates that the API client has been created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    description: The access token for the API client.
+                    example: "abc123xyz"
+              example:
+                accessToken: "abc123xyz"
+        "400":
+          description: Indicates that the parameters provided are invalid.
+        "409":
+          description: Indicates that an API client with the provided email already exists.
+
+components:
+  schemas:
+    ClientName:
+      type: string
+      description: The name of the API client.
+      example: "My Application"
+    ClientEmail:
+      type: string
+      format: email
+      description: The email address of the API client.
+      example: "myapp@example.com"
+
+  examples:
+    ApiClientRequest:
+      summary: Example of an API client registration request
+      value:
+        clientName: "My Application"
+        clientEmail: "myapp@example.com"

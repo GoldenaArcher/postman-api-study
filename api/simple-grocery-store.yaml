@@ -22,6 +22,8 @@ paths:
                     example: "Welcome to the Simple Grocery Store API!"
   /status:
     $ref: "./status-api.yaml#/paths/~1status"
+  /api-clients:
+    $ref: "./auth-api.yaml#/paths/~1api-clients"
   /products:
     $ref: "./products-api.yaml#/paths/~1products"
   /products/{productId}:

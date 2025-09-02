@@ -40,8 +40,36 @@ paths:
       responses:
         "201":
           description: Indicates that the order has been created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderCreatedResponse"
+              examples:
+                OrderCreated:
+                  $ref: "#/components/examples/PostOrderResponseExample"
         "400":
           description: Indicates that the parameters provided are invalid.
+        "401":
+          description: Indicates that the request has not been authenticated. Check the response body for additional details.
+    get:
+      tags: [orders]
+      summary: RReturns all orders created by the API client.
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: "./common/security.yaml#/components/AuthorizationHeader"
+      responses:
+        "200":
+          description: Indicates a successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderCreatedResponse"
+              examples:
+                GetOrdersSingle:
+                  $ref: "#/components/examples/GetOrderResponseExampleSingleItem"
+                GetOrdersMulti:
+                  $ref: "#/components/examples/GetOrderResponseExampleMultiItems"
         "401":
           description: Indicates that the request has not been authenticated. Check the response body for additional details.
 
@@ -49,14 +77,52 @@ components:
   securitySchemes:
     $ref: "./common/security.yaml#/components/securitySchemes"
 
+  x-snippets:
+    cartItemExample1: &cartItemExample1
+      id: 12345
+      productId: 4643
+      quantity: 2
+    cartItemExample2: &cartItemExample2
+      id: 67890
+      productId: 7890
+      quantity: 1
+
   examples:
     OrderRequest:
       summary: Example of an order request
       value:
         customerName: "Jane Doe"
         cartId: "ZFe4yhG5qNhmuNyrbLWa4"
+    PostOrderResponseExample:
+      summary: Example of an order creation response
+      value:
+        orderId: "ord_123456789"
+        created: true
+    GetOrderResponseExampleSingleItem:
+      summary: Example of an order fetch response (single item)
+      value:
+        id: "ord_123456789"
+        items:
+          - *cartItemExample1
+        customerName: "Jane Doe"
+        created: "2023-10-01T14:30:00Z"
+        comment: "Please deliver between 5-6 PM."
+    GetOrderResponseExampleMultiItems:
+      summary: Example of an order fetch response (multiple items)
+      value:
+        id: "ord_987654321"
+        items:
+          - *cartItemExample1
+          - *cartItemExample2
+        customerName: "John Smith"
+        created: "2023-10-02T10:15:00Z"
+        comment: "Leave at the front door."
 
   schemas:
+    OrderId:
+      type: string
+      description: The unique identifier for the order.
+      example: "ord_123456789"
     CustomerName:
       type: string
       description: The customer's full name.
@@ -65,3 +131,19 @@ components:
       type: string
       description: Optional comment from the customer.
       example: "Please deliver between 5-6 PM."
+    OrderCreatedResponse:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/OrderId"
+        items:
+          type: array
+          items:
+            $ref: "./carts-api.yaml#/components/schemas/CartItem"
+        customerName:
+          $ref: "#/components/schemas/CustomerName"
+        created:
+          type: string
+          format: date-time
+        comment:
+          $ref: "#/components/schemas/Comment"

@@ -95,6 +95,9 @@ components:
       summary: Example of a product list with a single product
       value:
         - *productCoffee
+    ProductListEmpty:
+      summary: Example of an empty product list
+      value: []
 
   parameters:
     categoryQueryParam:
@@ -172,3 +175,8 @@ components:
           type: string
         inStock:
           type: boolean
+
+    ProductArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/Product"

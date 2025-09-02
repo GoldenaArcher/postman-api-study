@@ -25,20 +25,80 @@ paths:
               examples:
                 CartCreated:
                   $ref: "#/components/examples/CartCreated"
+          links:
+            GetCartById:
+              $ref: "#/components/links/GetCartById"
+
+  /carts/{cartId}:
+    get:
+      tags: [carts]
+      summary: Returns a cart.
+      parameters:
+        - $ref: "#/components/parameters/cartIdPathParam"
+      operationId: getCartById
+      responses:
+        "200":
+          description: Indicates a successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetCartByIdResponse"
+              examples:
+                EmptyCart:
+                  $ref: "#/components/examples/EmptyCart"
+        "404":
+          description: Indicates that there is no cart with the specified id.
+
+  /carts/{cartid}/items:
+    get:
+      tags: [carts]
+      summary: Returns the items in a cart.
+      parameters:
+        - $ref: "#/components/parameters/cartIdPathParam"
+      responses:
+        "200":
+          description: Indicates a successful response.
+          content:
+            application/json:
+              schema:
+                $ref: "./products-api.yaml#/components/schemas/ProductArray"
+              examples:
+                EmptyCartList:
+                  $ref: "./products-api.yaml#/components/examples/ProductListEmpty"
+        "404":
+          description: Indicates that there is no cart with the specified id.
 
 components:
+  x-snippet:
+    cartIdExample: &cartIdExample ZFe4yhG5qNhmuNyrbLWa4
+
+  parameters:
+    cartIdPathParam:
+      name: cartId
+      in: path
+      required: true
+      description: The unique identifier for the cart.
+      schema:
+        $ref: "#/components/schemas/CartId"
+      example: *cartIdExample
+
   examples:
     CartCreated:
       summary: Example of a cart creation response
       value:
         cartId: "bx0-ycNjqIm5IvufuuZ09"
         created: true
+    EmptyCart:
+      summary: Example of an empty cart response
+      value:
+        created: "2025-09-07T14:48:00.000Z"
+        items: []
 
   schemas:
     CartId:
       type: string
       description: The unique identifier for a cart.
-      example: "ZFe4yhG5qNhmuNyrbLWa4"
+      example: *cartIdExample
     CartCreatedResponse:
       type: object
       properties:
@@ -47,3 +107,21 @@ components:
         created:
           type: boolean
           description: Indicates whether the cart was created successfully.
+    GetCartByIdResponse:
+      type: object
+      properties:
+        created:
+          type: string
+          format: date-time
+          description: The timestamp when the cart was created.
+          example: "2025-09-07T14:48:00.000Z"
+        items:
+          $ref: "./products-api.yaml#/components/schemas/ProductArray"
+
+  links:
+    GetCartById:
+      operationId: getCartById
+      parameters:
+        cartId: "$response.body#/cartId"
+      description: |
+        Link to retrieve the cart by its ID.

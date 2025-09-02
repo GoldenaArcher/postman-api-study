@@ -1,0 +1,15 @@
+meta {
+  name: Get cart items by cart id
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/carts/:cartId/items
+  body: none
+  auth: inherit
+}
+
+params:path {
+  cartId: ZFe4yhG5qNhmuNyrbLWa4
+}

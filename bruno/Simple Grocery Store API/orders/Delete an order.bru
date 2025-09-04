@@ -1,0 +1,25 @@
+meta {
+  name: Delete an order
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseUrl}}/orders/:orderId
+  body: none
+  auth: bearer
+}
+
+params:path {
+  orderId: {{orderId}}
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+      "comment": "Update order id"
+  }
+}

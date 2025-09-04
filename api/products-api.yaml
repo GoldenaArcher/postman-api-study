@@ -56,6 +56,16 @@ paths:
                   $ref: "#/components/examples/ProductBakery"
         "404":
           description: Indicates that there is no product with the specified id.
+    head:
+      tags: [products]
+      summary: Returns headers for a single product from the inventory.
+      parameters:
+        - $ref: "#/components/parameters/productIdPathParam"
+      responses:
+        "200":
+          description: Indicates a successful response.
+        "404":
+          description: Indicates that there is no product with the specified id.
 
 components:
   x-snippets:

@@ -1,0 +1,26 @@
+meta {
+  name: Update an cart item
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{baseUrl}}/carts/:cartId/items/:itemId
+  body: json
+  auth: inherit
+}
+
+params:path {
+  cartId: {{cartId}}
+  itemId: {{itemId}}
+}
+
+body:json {
+  {
+    "quantity": 4
+  }
+}
+
+settings {
+  encodeUrl: true
+}

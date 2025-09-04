@@ -1,0 +1,27 @@
+meta {
+  name: Replace an cart item
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{baseUrl}}/carts/:cartId/items/:itemId
+  body: json
+  auth: inherit
+}
+
+params:path {
+  cartId: {{cartId}}
+  itemId: {{itemId}}
+}
+
+body:json {
+  {
+      "quantity": 10,
+      "productId": 5477
+  }
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,0 +1,27 @@
+meta {
+  name: Delete a cart item
+  type: http
+  seq: 7
+}
+
+delete {
+  url: {{baseUrl}}/carts/:cartId/items/:itemId
+  body: none
+  auth: inherit
+}
+
+params:path {
+  cartId: {{cartId}}
+  itemId: {{itemId}}
+}
+
+body:json {
+  {
+      "quantity": 10,
+      "productId": 5477
+  }
+}
+
+settings {
+  encodeUrl: true
+}

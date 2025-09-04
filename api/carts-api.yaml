@@ -94,6 +94,73 @@ paths:
         "400":
           description: Indicates that the parameters provided are invalid.
 
+  /carts/{cartId}/items/{itemId}:
+    patch:
+      tags: [carts]
+      summary: Allows modifying information about an item in the cart.
+      parameters:
+        - $ref: "#/components/parameters/cartIdPathParam"
+        - $ref: "#/components/parameters/itemIdPathParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  description: |
+                    The quantity of the product in the cart.
+              required:
+                - quantity
+            examples:
+              UpdateCartItemRequestExample:
+                value:
+                  quantity: 3
+      responses:
+        "204":
+          description: Indicates that the item has been updated successfully.
+        "400":
+          description: Indicates that the parameters provided are invalid or missing.
+        "404":
+          description: Indicates that the specified cart or item was not found.
+
+    put:
+      tags: [carts]
+      summary: Replace an item in the cart with a new product and quantity.
+      parameters:
+        - $ref: "#/components/parameters/cartIdPathParam"
+        - $ref: "#/components/parameters/itemIdPathParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CartItem"
+            examples:
+              AddCartItemRequest:
+                $ref: "#/components/examples/AddCartItemRequestExample"
+      responses:
+        "204":
+          description: Indicates that the item has been replaced successfully.
+        "400":
+          description: Indicates that the parameters provided are invalid or missing.
+        "404":
+          description: Indicates that the specified cart or item was not found.
+
+    delete:
+      tags: [carts]
+      summary: Remove an item from the cart.
+      parameters:
+        - $ref: "#/components/parameters/cartIdPathParam"
+        - $ref: "#/components/parameters/itemIdPathParam"
+      responses:
+        "204":
+          description: Indicates that the item has been removed successfully.
+        "404":
+          description: Indicates that the specified cart or item was not found.
+
 components:
   x-snippet:
     cartIdExample: &cartIdExample ZFe4yhG5qNhmuNyrbLWa4
@@ -108,6 +175,14 @@ components:
       schema:
         $ref: "#/components/schemas/CartId"
       example: *cartIdExample
+    itemIdPathParam:
+      name: itemId
+      in: path
+      required: true
+      description: The unique identifier for the item in the cart.
+      schema:
+        $ref: "#/components/schemas/CartItemId"
+      example: *itemIdExample
 
   examples:
     CartCreated:
@@ -129,6 +204,11 @@ components:
       value:
         created: true
         itemId: *itemIdExample
+    UpdateCartItemRequestExample:
+      summary: Example of a request to update an item in a cart
+      value:
+        quantity: 3
+        productId: 4643
 
   schemas:
     CartId:
@@ -165,8 +245,6 @@ components:
     CartItem:
       type: object
       properties:
-        id:
-          $ref: "#/components/schemas/CartItemId"
         productId:
           $ref: "./products-api.yaml#/components/schemas/ProductId"
         quantity:
@@ -178,6 +256,7 @@ components:
           example: 2
       required:
         - productId
+
     CartItemId:
       type: number
       description: The unique identifier for a cart item.

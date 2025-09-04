@@ -62,6 +62,19 @@ paths:
                   $ref: "#/components/examples/GetOrderResponseExampleMultiItems"
         "401":
           description: Indicates that the request has not been authenticated. Check the response body for additional details.
+    head:
+      tags: [orders]
+      summary: Returns headers for all orders created by the API client.
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: "./common/security.yaml#/components/AuthorizationHeader"
+      responses:
+        "200":
+          description: Indicates a successful response.
+        "401":
+          description: Indicates that the request has not been authenticated. Check the response body for additional details.
+
   /orders/{orderId}:
     patch:
       tags: [orders]
@@ -88,6 +101,22 @@ paths:
           description: Indicates that the order has been updated successfully.
         "400":
           description: Indicates that the parameters provided are invalid.
+        "401":
+          description: Indicates that the request has not been authenticated. Check the response body for additional details.
+        "404":
+          description: Indicates that there is no order with the specified id.
+
+    delete:
+      tags: [orders]
+      summary: Deletes an existing order.
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: "./common/security.yaml#/components/AuthorizationHeader"
+        - $ref: "#/components/parameters/orderIdPathParam"
+      responses:
+        "204":
+          description: Indicates that the order has been deleted successfully.
         "401":
           description: Indicates that the request has not been authenticated. Check the response body for additional details.
         "404":

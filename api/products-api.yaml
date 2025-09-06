@@ -74,11 +74,13 @@ components:
       category: coffee
       name: "Starbucks Coffee Variety Pack, 100% Arabica"
       inStock: true
+      price: 29.99
     productBakery: &productBakery
       id: 1234
       category: bread-bakery
       name: "Freshly Baked Croissant"
       inStock: true
+      price: 3.99
 
   examples:
     CategoryMeat:
@@ -185,6 +187,10 @@ components:
           type: string
         inStock:
           type: boolean
+        price:
+          type: number
+          description: The price of the product in USD.
+          example: 12.99
 
     ProductArray:
       type: array

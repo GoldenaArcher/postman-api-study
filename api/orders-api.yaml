@@ -67,8 +67,6 @@ paths:
       summary: Returns headers for all orders created by the API client.
       security:
         - BearerAuth: []
-      parameters:
-        - $ref: "./common/security.yaml#/components/AuthorizationHeader"
       responses:
         "200":
           description: Indicates a successful response.

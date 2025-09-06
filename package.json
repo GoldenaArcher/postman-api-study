@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "mock": "nodemon --watch api --ext yaml,yml --exec \"prism mock ./api/simple-grocery-store.yaml -p 8080\""
+    "mock": "nodemon --watch api --ext yaml,yml --exec \"prism mock ./api/simple-grocery-store.yaml -p 8080 --errors\""
   },
   "keywords": [],
   "author": "",

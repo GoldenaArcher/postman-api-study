@@ -34,6 +34,26 @@ paths:
                   $ref: "#/components/examples/ProductListSingle"
         "400":
           description: Indicates that the parameters provided are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: "./common/error.yaml#/components/schemas/ErrorResponse"
+              examples:
+                InvalidCategory:
+                  summary: Invalid category
+                  value:
+                    code: 400
+                    message: "Invalid category. Must be one of: meat-seafood, fresh-produce, candy, bread-bakery, dairy, eggs, coffee."
+                InvalidResults:
+                  summary: Invalid results
+                  value:
+                    code: 400
+                    message: "Invalid results. Must be a number between 1 and 20."
+                InvalidAvailable:
+                  summary: Invalid availability
+                  value:
+                    code: 400
+                    message: "Invalid availability. Must be a boolean value."
 
   /products/{productId}:
     get:

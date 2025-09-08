@@ -1,0 +1,14 @@
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "An unexpected error occurred."
+        code:
+          type: integer
+          example: 500
+      required:
+        - message
+        - code

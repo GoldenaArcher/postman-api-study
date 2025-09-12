@@ -32,6 +32,12 @@ paths:
                   $ref: "#/components/examples/ProductListMany"
                 productListSingle:
                   $ref: "#/components/examples/ProductListSingle"
+                productListEmpty:
+                  $ref: "#/components/examples/ProductListEmpty"
+                productListAvailable:
+                  $ref: "#/components/examples/ProductListAvailable"
+                productListUnavailable:
+                  $ref: "#/components/examples/ProductListUnavailable"
         "400":
           description: Indicates that the parameters provided are invalid.
           content:
@@ -101,6 +107,24 @@ components:
       name: "Freshly Baked Croissant"
       inStock: true
       price: 3.99
+    productCandy: &productCandy
+      id: 5678
+      category: candy
+      name: "Assorted Chocolates"
+      inStock: false
+      price: 15.49
+    productDairy: &productDairy
+      id: 9101
+      category: dairy
+      name: "Organic Whole Milk"
+      inStock: true
+      price: 4.79
+    productEggs: &productEggs
+      id: 1122
+      category: eggs
+      name: "Free Range Eggs"
+      inStock: false
+      price: 2.99
 
   examples:
     CategoryMeat:
@@ -130,6 +154,17 @@ components:
     ProductListEmpty:
       summary: Example of an empty product list
       value: []
+    ProductListAvailable:
+      summary: Example of a product list with only available products
+      value:
+        - *productCoffee
+        - *productBakery
+        - *productDairy
+    ProductListUnavailable:
+      summary: Example of a product list with only unavailable products
+      value:
+        - *productCandy
+        - *productEggs
 
   parameters:
     categoryQueryParam:

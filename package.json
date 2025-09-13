@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "@stoplight/prism-cli": "^5.14.2",
+    "newman": "^6.2.1",
     "nodemon": "^3.1.10"
   }
 }

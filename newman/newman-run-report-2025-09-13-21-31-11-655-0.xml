@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Simple Grocery Store API" tests="18" time="0.113">
+  <testsuite name="status / API Status" id="34e773c0-c4b7-4f99-b930-7d114b6da1f8" timestamp="2025-09-13T21:31:11.078Z" tests="2" failures="0" errors="0" time="0.031">
+    <testcase name="Status code is 200" time="0.031" classname="StatusApiStatus"/>
+    <testcase name="Status is OK" time="0.031" classname="StatusApiStatus"/>
+  </testsuite>
+  <testsuite name="products / error cases / Get all products invalid category" id="939045d1-4262-4bce-88db-e0cadd19b163" timestamp="2025-09-13T21:31:11.078Z" tests="2" failures="0" errors="0" time="0.005">
+    <testcase name="Status code is 400" time="0.005" classname="ProductsErrorCasesGetAllProductsInvalidCategory"/>
+    <testcase name="Error message" time="0.005" classname="ProductsErrorCasesGetAllProductsInvalidCategory"/>
+  </testsuite>
+  <testsuite name="products / success cases / Get all products" id="c28fa1ea-bf22-410c-8769-5b506341af0e" timestamp="2025-09-13T21:31:11.078Z" tests="2" failures="0" errors="0" time="0.004">
+    <testcase name="At least one available product exists" time="0.004" classname="ProductsSuccessCasesGetAllProducts"/>
+    <testcase name="Return a valid product object and is in stock" time="0.004" classname="ProductsSuccessCasesGetAllProducts"/>
+  </testsuite>
+  <testsuite name="products / success cases / Get single product" id="e10bb12b-71a8-4ce6-9da9-de3c8f620879" timestamp="2025-09-13T21:31:11.078Z" tests="6" failures="0" errors="0" time="0.005">
+    <testcase name="Status code is 200" time="0.005" classname="ProductsSuccessCasesGetSingleProduct"/>
+    <testcase name="Response is an object" time="0.005" classname="ProductsSuccessCasesGetSingleProduct"/>
+    <testcase name="Correct product was retrieved" time="0.005" classname="ProductsSuccessCasesGetSingleProduct"/>
+    <testcase name="Product name" time="0.005" classname="ProductsSuccessCasesGetSingleProduct"/>
+    <testcase name="Product in stock" time="0.005" classname="ProductsSuccessCasesGetSingleProduct"/>
+    <testcase name="Product price" time="0.005" classname="ProductsSuccessCasesGetSingleProduct"/>
+  </testsuite>
+  <testsuite name="carts / Create a cart" id="f5a86156-969b-4660-ad06-5705e4bd2a87" timestamp="2025-09-13T21:31:11.078Z" tests="2" failures="1" errors="0" time="0.005">
+    <testcase name="Status code is 201" time="0.005" classname="CartsCreateACart">
+      <failure type="AssertionFailure" message="expected response to have status code 200 but got 201">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: a9ad4f6a-56a8-4759-9ac5-73faac8189dc.]]>
+        <![CDATA[Collection name: Simple Grocery Store API.]]>
+        <![CDATA[Request name: carts / Create a cart.]]>
+        <![CDATA[Test description: Status code is 201.]]>
+        <![CDATA[Error message: expected response to have status code 200 but got 201.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 200 but got 201
+   at Object.eval sandbox-script.js:1:5).]]>
+      </failure>
+    </testcase>
+    <testcase name="Response returns a cartId" time="0.005" classname="CartsCreateACart"/>
+  </testsuite>
+  <testsuite name="carts / Get cart by id" id="286e8863-00f5-44b1-91af-e2632ca7661b" timestamp="2025-09-13T21:31:11.078Z" tests="0" failures="0" errors="0" time="0.004"/>
+  <testsuite name="carts / Get cart items" id="db082909-48ad-40df-8bed-4f16dd6aff4a" timestamp="2025-09-13T21:31:11.078Z" tests="0" failures="0" errors="0" time="0.005"/>
+  <testsuite name="carts / Add cart items" id="31772ddd-7bae-482c-a6be-0297f4ff367e" timestamp="2025-09-13T21:31:11.078Z" tests="2" failures="0" errors="0" time="0.006">
+    <testcase name="Status code is 201" time="0.006" classname="CartsAddCartItems"/>
+    <testcase name="Response returns a valid itemId" time="0.006" classname="CartsAddCartItems"/>
+  </testsuite>
+  <testsuite name="carts / Update an cart item" id="181c8491-b30c-48d3-bdd6-16be1f2fdac3" timestamp="2025-09-13T21:31:11.078Z" tests="0" failures="0" errors="0" time="0.008"/>
+  <testsuite name="carts / Replace an cart item" id="8c1668cc-a53b-4cff-b73e-dea67bb89079" timestamp="2025-09-13T21:31:11.078Z" tests="0" failures="0" errors="0" time="0.003"/>
+  <testsuite name="carts / Delete an cart item" id="513ebd4b-7696-4732-bcc5-3c22d6509720" timestamp="2025-09-13T21:31:11.078Z" tests="0" failures="0" errors="0" time="0.005"/>
+  <testsuite name="orders / error cases / Test order authorized" id="9fff33d3-1d4e-4ed8-98f8-1726df4e71a4" timestamp="2025-09-13T21:31:11.078Z" tests="1" failures="0" errors="0" time="0.004">
+    <testcase name="Status code is 401" time="0.004" classname="OrdersErrorCasesTestOrderAuthorized"/>
+  </testsuite>
+  <testsuite name="orders / success cases / Test order endpoint" id="89b7968e-b168-400a-8ec4-401eea176df0" timestamp="2025-09-13T21:31:11.078Z" tests="0" failures="0" errors="0" time="0.004"/>
+  <testsuite name="orders / success cases / Get all orders" id="6c40e2c8-6b07-4634-a4b3-16031d250c30" timestamp="2025-09-13T21:31:11.078Z" tests="0" failures="0" errors="0" time="0.004"/>
+  <testsuite name="orders / success cases / Create an order" id="3f692f79-3152-4866-ae54-44fc97ce71bb" timestamp="2025-09-13T21:31:11.078Z" tests="0" failures="0" errors="1" time="0.005">
+    <system-err><![CDATA[Iteration: 0
+
+---
+testScriptError: No data, empty input at 1:1
+
+^
+---
+]]></system-err>
+  </testsuite>
+  <testsuite name="orders / success cases / Update an order" id="eb1ce06a-ecde-42f4-85bd-1df1b0ee4eaf" timestamp="2025-09-13T21:31:11.078Z" tests="0" failures="0" errors="0" time="0.007"/>
+  <testsuite name="orders / success cases / Delete an order" id="7882775d-a4c8-44e4-aecd-460be21db19d" timestamp="2025-09-13T21:31:11.078Z" tests="0" failures="0" errors="0" time="0.004"/>
+  <testsuite name="auth / Register API Client" id="3b0f0ea1-9849-471f-9b0b-decd076536fd" timestamp="2025-09-13T21:31:11.078Z" tests="0" failures="0" errors="0" time="0.004"/>
+</testsuites>

@@ -65,6 +65,8 @@ paths:
               examples:
                 EmptyCartList:
                   $ref: "./products-api.yaml#/components/examples/ProductListEmpty"
+                ManyCartItems:
+                  $ref: "./products-api.yaml#/components/examples/ProductListMany"
         "404":
           description: Indicates that there is no cart with the specified id.
     post:
